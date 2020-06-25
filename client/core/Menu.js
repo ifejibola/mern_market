@@ -6,15 +6,21 @@ import IconButton from '@material-ui/core/IconButton'
 import HomeIcon from '@material-ui/icons/Home'
 import Button from '@material-ui/core/Button'
 import auth from './../auth/auth-helper'
-import {Link, withRouter} from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 const isActive = (history, path) => {
   if (history.location.pathname == path)
-    return {color: '#ff4081'}
+    return { color: '#ff4081' }
   else
-    return {color: '#ffffff'}
+    return { color: '#ffffff' }
 }
-const Menu = withRouter(({history}) => (
+const isPartActive = (history, path) => {
+  if (history.location.pathname.includes(path))
+    return { color: '#bef67a' }
+  else
+    return { color: '#ffffff' }
+}
+const Menu = withRouter(({ history }) => (
   <AppBar position="static">
     <Toolbar>
       <Typography variant="h6" color="inherit">
@@ -22,7 +28,7 @@ const Menu = withRouter(({history}) => (
       </Typography>
       <Link to="/">
         <IconButton aria-label="Home" style={isActive(history, "/")}>
-          <HomeIcon/>
+          <HomeIcon />
         </IconButton>
       </Link>
       <Link to="/users">
@@ -42,12 +48,17 @@ const Menu = withRouter(({history}) => (
       }
       {
         auth.isAuthenticated() && (<span>
+          {auth.isAuthenticated().user.seller && (<>
+            <Link to="/seller/shops"><Button style={isPartActive(history, "/seller/")}>My Shops</Button></Link>
+            <Link to="/myauctions"><Button style={isPartActive(history, "/myauctions")}>My Auctions</Button></Link>
+          </>
+          )}
           <Link to={"/user/" + auth.isAuthenticated().user._id}>
             <Button style={isActive(history, "/user/" + auth.isAuthenticated().user._id)}>My Profile</Button>
           </Link>
           <Button color="inherit" onClick={() => {
-              auth.clearJWT(() => history.push('/'))
-            }}>Sign out</Button>
+            auth.clearJWT(() => history.push('/'))
+          }}>Sign out</Button>
         </span>)
       }
     </Toolbar>

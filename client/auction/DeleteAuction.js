@@ -8,26 +8,25 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import auth from './../auth/auth-helper'
-import {remove} from './api-product.js'
+import auth from '../auth/auth-helper'
+import {remove} from './api-auction.js'
 
-export default function DeleteProduct(props) {
+export default function DeleteAuction(props) {
   const [open, setOpen] = useState(false)
   
   const jwt = auth.isAuthenticated()
   const clickButton = () => {
     setOpen(true)
   }
-  const deleteProduct = () => {
+  const deleteAuction = () => {
     remove({
-      shopId: props.shopId,
-      productId: props.product._id
+      auctionId: props.auction._id
     }, {t: jwt.token}).then((data) => {
       if (data.error) {
         console.log(data.error)
       } else {
         setOpen(false)
-        props.onRemove(props.product)
+        props.onRemove(props.auction)
       }
     })
   }
@@ -38,28 +37,26 @@ export default function DeleteProduct(props) {
       <IconButton aria-label="Delete" onClick={clickButton} color="secondary">
         <DeleteIcon/>
       </IconButton>
+
       <Dialog open={open} onClose={handleRequestClose}>
-        <DialogTitle>{"Delete "+props.product.name}</DialogTitle>
+        <DialogTitle>{"Delete "+props.auction.itemName}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Confirm to delete your product {props.product.name}.
+            Confirm to delete your auction {props.auction.itemName}.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleRequestClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={deleteProduct} color="secondary" autoFocus="autoFocus">
+          <Button onClick={deleteAuction} color="secondary" autoFocus="autoFocus">
             Confirm
           </Button>
         </DialogActions>
       </Dialog>
     </span>)
-
 }
-DeleteProduct.propTypes = {
-  shopId: PropTypes.string.isRequired,
-  product: PropTypes.object.isRequired,
+DeleteAuction.propTypes = {
+  auction: PropTypes.object.isRequired,
   onRemove: PropTypes.func.isRequired
 }
-

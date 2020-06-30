@@ -13,6 +13,9 @@ import Shops from './shop/Shops'
 import MyShops from './shop/MyShops'
 import Shop from './shop/shop'
 import EditShop from './shop/EditShop'
+import NewProduct from './product/NewProduct'
+import Product from './product/Product'
+import EditProduct from './product/EditProduct'
 
 
 const MainRouter = () => {
@@ -26,13 +29,15 @@ const MainRouter = () => {
       <PrivateRoute path="/user/edit/:userId" component={EditProfile} />
       <Route path="/user/:userId" component={Profile} />
 
+      <Route path="/product/:productId" component={Product} />
       <Route path="/shops/all" component={Shops} />
       <Route path="/shops/:shopId" component={Shop} />
 
       <PrivateRoute path="/seller/shops" component={MyShops} />
       <PrivateRoute path="/seller/shop/new" component={NewShop} />
       <PrivateRoute path="/seller/shop/edit/:shopId" component={EditShop} />
-
+      <PrivateRoute path="/seller/:shopId/products/new" component={NewProduct} />
+      <PrivateRoute path="/seller/:shopId/:productId/edit" component={EditProduct} />
 
     </Switch>
   </div>)

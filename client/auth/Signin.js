@@ -38,12 +38,12 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function Signin(props) {
-  const classes = useStyles()
+  const classes = useStyles();
   const [values, setValues] = useState({
-      email: '',
-      password: '',
-      error: '',
-      redirectToReferrer: false
+    email: '',
+    password: '',
+    error: '',
+    redirectToReferrer: false
   })
 
   const clickSubmit = () => {
@@ -68,9 +68,9 @@ export default function Signin(props) {
   }
 
   const {from} = props.location.state || {
-      from: {
-        pathname: '/'
-      }
+    from: {
+      pathname: '/'
+    }
   }
   const {redirectToReferrer} = values
   if (redirectToReferrer) {
@@ -80,7 +80,7 @@ export default function Signin(props) {
   return (
       <Card className={classes.card}>
         <CardContent>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h5" className={classes.title}>
             Sign In
           </Typography>
           <TextField id="email" type="email" label="Email" className={classes.textField} value={values.email} onChange={handleChange('email')} margin="normal"/><br/>
@@ -93,8 +93,10 @@ export default function Signin(props) {
           }
         </CardContent>
         <CardActions>
-          <Button color="primary" variant="contained" onClick={clickSubmit} className={classes.submit}>Submit</Button>
+        <Button color="primary" variant="contained" onClick={clickSubmit} className={classes.submit}>Submit</Button>
         </CardActions>
       </Card>
     )
 }
+
+

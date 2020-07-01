@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function Signup() {
-  const classes = useStyles()
+  const classes = useStyles();
   const [values, setValues] = useState({
     name: '',
     password: '',
@@ -68,8 +68,7 @@ export default function Signup() {
         setValues({ ...values, error: '', open: true})
       }
     })
-  }
-
+  }   
     return (<div>
       <Card className={classes.card}>
         <CardContent>
@@ -105,5 +104,5 @@ export default function Signup() {
         </DialogActions>
       </Dialog>
     </div>
-    )
+  )
 }

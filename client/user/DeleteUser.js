@@ -35,7 +35,7 @@ export default function DeleteUser(props) {
   const handleRequestClose = () => {
     setOpen(false)
   }
-
+  
   if (redirect) {
     return <Redirect to='/'/>
   }
@@ -66,4 +66,3 @@ export default function DeleteUser(props) {
 DeleteUser.propTypes = {
   userId: PropTypes.string.isRequired
 }
-

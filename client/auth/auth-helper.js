@@ -15,15 +15,6 @@ const auth = {
       sessionStorage.setItem('jwt', JSON.stringify(jwt))
     cb()
   },
-  updateUser(user, cb) {
-    if (typeof window !== "undefined")
-      if (sessionStorage.getItem('jwt')) {
-        let auth = JSON.parse(sessionStorage.getItem('jwt'))
-        auth.user = user
-        sessionStorage.setItem('jwt', JSON.stringify(auth))
-        cb()
-      }
-  },
   clearJWT(cb) {
     if (typeof window !== "undefined")
       sessionStorage.removeItem('jwt')
@@ -32,6 +23,16 @@ const auth = {
     signout().then((data) => {
       document.cookie = "t=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
     })
+  },
+  updateUser(user, cb) {
+    if(typeof window !== "undefined"){
+      if(sessionStorage.getItem('jwt')){
+         let auth = JSON.parse(sessionStorage.getItem('jwt'))
+         auth.user = user
+         sessionStorage.setItem('jwt', JSON.stringify(auth))
+         cb()
+       }
+    }
   }
 }
 

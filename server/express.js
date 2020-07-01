@@ -10,7 +10,8 @@ import userRoutes from './routes/user.routes'
 import authRoutes from './routes/auth.routes'
 import shopRoutes from './routes/shop.routes'
 import productRoutes from './routes/product.routes'
-
+import orderRoutes from './routes/order.routes'
+import auctionRoutes from './routes/auction.routes'
 
 // modules for server side rendering
 import React from 'react'
@@ -48,6 +49,8 @@ app.use('/', userRoutes)
 app.use('/', authRoutes)
 app.use('/', shopRoutes)
 app.use('/', productRoutes)
+app.use('/', orderRoutes)
+app.use('/', auctionRoutes)
 
 app.get('*', (req, res) => {
   const sheets = new ServerStyleSheets()
@@ -55,28 +58,28 @@ app.get('*', (req, res) => {
   const markup = ReactDOMServer.renderToString(
     sheets.collect(
       <StaticRouter location={req.url} context={context}>
-        <ThemeProvider theme={theme}>
-          <MainRouter />
-        </ThemeProvider>
+          <ThemeProvider theme={theme}>
+            <MainRouter/>
+          </ThemeProvider>
       </StaticRouter>
-    )
+     )
   )
-  if (context.url) {
-    return res.redirect(303, context.url)
-  }
-  const css = sheets.toString()
-  res.status(200).send(Template({
-    markup: markup,
-    css: css
-  }))
+    if (context.url) {
+      return res.redirect(303, context.url)
+    }
+    const css = sheets.toString()
+    res.status(200).send(Template({
+      markup: markup,
+      css: css
+    }))
 })
 
 // Catch unauthorised errors
 app.use((err, req, res, next) => {
   if (err.name === 'UnauthorizedError') {
-    res.status(401).json({ "error": err.name + ": " + err.message })
-  } else if (err) {
-    res.status(400).json({ "error": err.name + ": " + err.message })
+    res.status(401).json({"error" : err.name + ": " + err.message})
+  }else if (err) {
+    res.status(400).json({"error" : err.name + ": " + err.message})
     console.log(err)
   }
 })
